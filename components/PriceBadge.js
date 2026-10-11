@@ -1,4 +1,4 @@
-import { pct } from "@/lib/data";
+import { pct } from "@/lib/format";
 
 export default function PriceBadge({ change, arrow = false }) {
   const up = change > 0;

@@ -1,22 +1,23 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getCategory, productsByCategory, num } from "@/lib/data";
+import { getCategory, getProducts } from "@/lib/api";
+import { num } from "@/lib/format";
 import ProductCard from "@/components/ProductCard";
 import SortSelect from "@/components/SortSelect";
 import { sortProducts } from "@/lib/sort-products";
 
 export async function generateMetadata({ params }) {
-  const c = getCategory((await params).slug);
+  const c = await getCategory((await params).slug).catch(() => null);
   return { title: c ? `${c.name} — বাজার দর` : "বাজার দর" };
 }
 
 export default async function CategoryPage({ params, searchParams }) {
   const { slug } = await params;
   const sp = await searchParams;
-  const category = getCategory(slug);
+  const category = await getCategory(slug);
   if (!category) notFound();
   const sort = ["price-asc", "price-desc"].includes(sp?.sort) ? sp.sort : "default";
-  const list = sortProducts(productsByCategory(slug), sort);
+  const list = sortProducts(await getProducts({ category: slug }), sort);
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 pb-12">

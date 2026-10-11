@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { categories } from "@/lib/data";
 
-export default function CategoryNav() {
+export default function CategoryNav({ categories = [] }) {
   const pathname = usePathname();
   return (
     <nav className="no-scrollbar flex items-center gap-1 overflow-x-auto py-2" aria-label="পণ্যের বিভাগ">

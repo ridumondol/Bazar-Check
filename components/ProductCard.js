@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { priceNum } from "@/lib/data";
+import { priceNum } from "@/lib/format";
 import PriceBadge from "./PriceBadge";
 
 export default function ProductCard({ product }) {

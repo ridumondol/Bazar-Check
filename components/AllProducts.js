@@ -1,13 +1,13 @@
 "use client";
 import { useMemo, useState } from "react";
-import { categories, num } from "@/lib/data";
+import { num } from "@/lib/format";
 import ProductCard from "./ProductCard";
 import { SortControl } from "./SortSelect";
 import { sortProducts } from "@/lib/sort-products";
 
 const chip = "inline-flex h-6 items-center gap-1.5 rounded-lg border px-[9px] text-[11px] font-semibold transition";
 
-export default function AllProducts({ products }) {
+export default function AllProducts({ products, categories = [] }) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("all");
   const [sort, setSort] = useState("default");

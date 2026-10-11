@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { products, risers, fallers, dateBn } from "@/lib/data";
+import { getProducts, getCategories } from "@/lib/api";
+import { risers, fallers } from "@/lib/market";
+import { dateBn } from "@/lib/format";
 import ProductCard from "@/components/ProductCard";
 import AllProducts from "@/components/AllProducts";
 
@@ -21,7 +23,8 @@ function Movers({ icon, color, title, items }) {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const [products, categories] = await Promise.all([getProducts(), getCategories()]);
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-6">
       <section className="rounded-3xl border border-line bg-surface">
@@ -43,9 +46,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Movers icon="▲" color="text-up" title="আজ দাম বেড়েছে" items={risers()} />
-      <Movers icon="▼" color="text-down" title="আজ দাম কমেছে" items={fallers()} />
-      <AllProducts products={products} />
+      <Movers icon="▲" color="text-up" title="আজ দাম বেড়েছে" items={risers(products)} />
+      <Movers icon="▼" color="text-down" title="আজ দাম কমেছে" items={fallers(products)} />
+      <AllProducts products={products} categories={categories} />
     </div>
   );
 }

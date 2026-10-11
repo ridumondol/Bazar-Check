@@ -1,7 +1,14 @@
-import { products, priceNum } from "@/lib/data";
+import { getProducts } from "@/lib/api";
+import { priceNum } from "@/lib/format";
 import PriceBadge from "./PriceBadge";
 
-export default function Ticker() {
+export default async function Ticker() {
+  // Shown on every page, so degrade to "no ticker" instead of failing the whole layout.
+  const products = await getProducts().catch((e) => {
+    console.error("Ticker: failed to load products:", e.message);
+    return [];
+  });
+  if (!products.length) return null;
   const items = products.slice(0, 12);
   const track = [...items, ...items];
   return (

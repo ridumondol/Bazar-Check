@@ -1,10 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { getProduct, getCategory, marketPrices, priceNum } from "@/lib/data";
+import { getProduct, getCategory } from "@/lib/api";
+import { marketPrices } from "@/lib/market";
+import { priceNum } from "@/lib/format";
 import { getSession } from "@/lib/session";
 
 export async function generateMetadata({ params }) {
-  const p = getProduct((await params).id);
+  const p = await getProduct((await params).id).catch(() => null);
   return { title: p ? `${p.name} — বাজার দর` : "বাজার দর" };
 }
 
@@ -23,11 +25,15 @@ function Stat({ label, value, note, color = "" }) {
 
 export default async function ProductPage({ params }) {
   const { id } = await params;
-  const product = getProduct(id);
+  const product = await getProduct(id);
   if (!product) notFound();
   if (!(await getSession())) redirect(`/signin?callbackURL=/products/${product.id}`);
 
-  const category = getCategory(product.category);
+  const category = (await getCategory(product.category)) ?? {
+    slug: product.category,
+    name: product.category,
+    emoji: product.emoji,
+  };
   const rows = marketPrices(product);
   const min = Math.min(...rows.map((r) => r.min));
   const max = Math.max(...rows.map((r) => r.max));

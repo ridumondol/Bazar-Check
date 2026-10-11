@@ -34,7 +34,7 @@ BETTER_AUTH_SECRET=PASTE_YOUR_GENERATED_SECRET_HERE
 BETTER_AUTH_URL=http://localhost:3000
 ```
 
-Replace every example value. Do not commit `.env.local` or paste it into chats. Google/GitHub login is optional; configure the corresponding client ID and secret only if you want social login.
+Replace every example value. `BAZARDOR_API_URL` is optional (see "Data source" below). Do not commit `.env.local` or paste it into chats. Google/GitHub login is optional; configure the corresponding client ID and secret only if you want social login.
 
 ## 4. Install and test the connection
 
@@ -65,8 +65,30 @@ npm run build
 
 A successful build confirms compilation, but live authentication still needs to be tested against your own Atlas database.
 
+## Data source (Bazardor API)
+
+Categories and products come from the Bazardor API (client code in `lib/api.js`). The app ships with this API built in:
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/bazardor/categories` | All categories (8) |
+| GET | `/api/bazardor/categories/chal` | Single category by id |
+| GET | `/api/bazardor/products` | All products (33) |
+| GET | `/api/bazardor/products?category=chal` | Filter products by category (any field works) |
+| GET | `/api/bazardor/products/1` | Single product by id |
+
+With `npm run dev` you can open e.g. http://localhost:3000/api/bazardor/products in the browser. The data lives in `lib/bazardor-data.js`; route handlers are under `app/api/bazardor`.
+
+To read from another server instead, add this to `.env.local` and restart `npm run dev`:
+
+```env
+BAZARDOR_API_URL=https://your-real-host.example
+```
+
+(host only, no `/api/bazardor`). Responses are cached for 60 seconds. If that server uses different field names than the UI expects, adjust `normalizeCategory` / `normalizeProduct` in `lib/api.js`.
+
 ## Notes
 
-- Product prices in `lib/data.js` are sample/mock data and are not verified live market prices.
+- Product prices come from the Bazardor API (sample values in the built-in one, not verified live market prices). The per-market table on the product page (`marketPrices` in `lib/market.js`) is still sample data derived from the product price, because the API has no per-market endpoint.
 - `.env.local`, MongoDB credentials, and `BETTER_AUTH_SECRET` must remain private.
 - The project cannot be fully live-tested without the owner's valid Atlas credentials and network access.

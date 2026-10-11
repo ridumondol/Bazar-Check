@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSession } from "@/lib/session";
-import { dateBn } from "@/lib/data";
+import { dateBn } from "@/lib/format";
+import { getCategories } from "@/lib/api";
 import UserMenu from "./UserMenu";
 import CategoryNav from "./CategoryNav";
 
@@ -9,6 +10,11 @@ const btn = "inline-flex h-10 items-center justify-center rounded-lg px-[17px] t
 export default async function Header() {
   const session = await getSession();
   const user = session?.user;
+  // The nav is decorative chrome on every page, so an API outage should not take the whole site down.
+  const categories = await getCategories().catch((e) => {
+    console.error("Header: failed to load categories:", e.message);
+    return [];
+  });
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-surface">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
@@ -35,7 +41,7 @@ export default async function Header() {
       </div>
       <div className="border-t border-canvas bg-surface">
         <div className="mx-auto max-w-6xl px-4">
-          <CategoryNav />
+          <CategoryNav categories={categories} />
         </div>
       </div>
     </header>
