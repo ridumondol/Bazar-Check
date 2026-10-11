@@ -29,15 +29,15 @@ export default async function Home() {
     <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-6">
       <section className="rounded-3xl border border-line bg-surface">
         <div className="flex flex-col items-start justify-between gap-8 px-4 py-10 md:flex-row">
-          <div className="flex max-w-xl flex-col items-start gap-2">
-            <span className="rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand">{dateBn()}</span>
-            <h1 className="text-4xl font-bold leading-tight">আজকের বাজারের দাম এক নজরে</h1>
-            <p className="mt-1 leading-6">
+          <div className="flex max-w-xl flex-col items-start gap-2 font-light">
+            <span className="rounded-full bg-brand/10 px-3 py-1 text-sm font-light text-brand">{dateBn()}</span>
+            <h1 className="text-4xl font-light leading-tight">আজকের বাজারের দাম এক নজরে</h1>
+            <p className="mt-1 font-light leading-6">
               চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
             </p>
             <a
               href="#সব-পণ্য"
-              className="mt-4 inline-flex h-10 items-center rounded-lg border border-brand-dark bg-brand px-[17px] text-sm font-semibold text-brand-content shadow-[0_4px_6px_-1px_rgba(5,137,62,0.2),0_2px_4px_-2px_rgba(5,137,62,0.2)] transition hover:bg-brand-dark"
+              className="mt-4 inline-flex h-10 items-center rounded-lg border border-brand-dark bg-brand px-[17px] text-sm font-light text-brand-content shadow-[0_4px_6px_-1px_rgba(5,137,62,0.2),0_2px_4px_-2px_rgba(5,137,62,0.2)] transition hover:bg-brand-dark"
             >
               সব পণ্য দেখুন
             </a>

@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 const hind = Hind_Siliguri({
   subsets: ["bengali", "latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-hind",
   display: "swap",
 });
@@ -19,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="bn" data-theme="bazardor">
-      <body className={`${hind.variable} min-h-screen bg-canvas font-sans text-ink`}>
+      <body className={`${hind.variable} min-h-screen bg-canvas font-sans font-light text-ink`}>
         <Header />
         <Ticker />
         <main>{children}</main>
