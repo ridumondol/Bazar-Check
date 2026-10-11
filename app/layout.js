@@ -18,8 +18,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="bn" data-theme="bazardor">
-      <body className={`${hind.variable} min-h-screen bg-canvas font-sans font-light text-ink`}>
+    <html lang="bn" data-theme="bazardor" suppressHydrationWarning>
+      <body
+        className={`${hind.variable} min-h-screen bg-canvas font-sans font-light text-ink`}
+        suppressHydrationWarning
+      >
         <Header />
         <Ticker />
         <main>{children}</main>
